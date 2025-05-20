@@ -1,6 +1,7 @@
 ﻿using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
 using BlogData.Models;
+using BlogData.Repositories;
 
 namespace BlogData;
 
@@ -10,61 +11,24 @@ class Program
 
     static void Main(string[] args)
     {
-        //ReadUsers();
-        //ReadUser();
-       //CreateUser();
-       //ReadUsers();
-       //UpdateUser();
-       DeleteUser();
+        var connection = new SqlConnection(connection_String);
+        connection.Open();
+        ReadUsers(connection);
+        ReadRoles(connection);
+        connection.Close();
     }
 
-    public static void ReadUsers()
+    public static void ReadUsers(SqlConnection connection)
     {
-        using (var connection = new SqlConnection(connection_String))
-        {
-            var users = connection.GetAll<User>();
-            foreach (var user in users)
-            {
-                Console.WriteLine(user.Name);
-            }
-        }
-    }
-    
-    public static void ReadUser()
-    {
-        using (var connection = new SqlConnection(connection_String))
-        {
-            var user = connection.Get<User>(1);
+        var repository = new UserRepository(connection);
+        foreach (var user in repository.Get())
             Console.WriteLine(user.Name);
-        }
     }
-    public static void CreateUser()
+
+    public static void ReadRoles(SqlConnection connection)
     {
-        var user = new User()
-        { Name = "Koda", Bio = "husky", Email = "koda@gmail.com", Image = "https://", Slug = "husky-siberian", PasswordHash = "petisco" };
-        using (var connection = new SqlConnection(connection_String))
-        {
-            connection.Insert<User>(user);
-            Console.WriteLine($"Realized cadastro");
-        }
-    } 
-    public static void UpdateUser()
-    {
-        var user = new User()
-        { Id = 2 ,Name = "Koda Alves", Bio = "husky siberiano", Email = "kodaAtentada@gmail.com", Image = "https://", Slug = "husky-siberian", PasswordHash = "petisco" };
-        using (var connection = new SqlConnection(connection_String))
-        {
-            connection.Update<User>(user);
-            Console.WriteLine($"User Update");
-        }
-    }public static void DeleteUser()
-    {
-        using (var connection = new SqlConnection(connection_String))
-        {
-            var user = connection.Get<User>(2);
-            connection.Delete(user);
-            Console.WriteLine($"User Delete");
-        }
+        var repository = new RoleRepository(connection);
+        foreach (var role in repository.Get())
+            Console.WriteLine(role.Name);
     }
 }
-
