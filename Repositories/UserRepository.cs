@@ -15,9 +15,28 @@ public class UserRepository
 
     public User GetById(int userId)
         =>_connection.Get<User>(userId);
+
+    public void Create(User user)
+    {
+        user.Id = 0;
+        _connection.Insert(user);
+    }
     
-    public void Create(User user) 
-        => _connection.Insert(user);
-    
-    
+    public void Update(User user)
+        => _connection.Update(user);
+
+    public void Delete(User user)
+    {
+        if(user.Id != 0)
+            _connection.Update(user);
+    }
+
+    public void Delete(int idUser)
+    {
+        if (idUser != 0)
+            return;
+        var user = _connection.Get<User>(idUser);
+        _connection.Delete(user);
+        
+    }
 }
