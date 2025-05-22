@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using BlogData.Models;
 using BlogData.Repositories;
+using BlogData.Screens.CategoryScreens;
 using BlogData.Screens.TagScreens;
 using BlogData.Screens.UserScreens;
 
@@ -20,7 +21,7 @@ class Program
         Database.Connection.Close();
     }
 
-    private static void Load()
+    public static void Load()
     {
         Console.Clear();
         Console.WriteLine("Blog");
@@ -40,6 +41,12 @@ class Program
         {
             case 1:
                 MenuUserScreen.Load();
+                break;
+            case 2:
+                Load();
+                break;
+            case 3:
+                MenuCategoryScreen.Load();
                 break;
             case 4:
                 MenuTagScreen.Load();
