@@ -15,5 +15,22 @@ public class MenuCategoryScreen
         Console.WriteLine("4. Delete category");
         Console.WriteLine();
         var option = int.Parse(Console.ReadLine()!);
+
+        switch (option)
+        {
+            case 1:
+                ListCategoryScreen.Load();
+                break;
+            case 2:
+                CreateCategoryScreen.Load();
+                break;
+            case 3:
+                UpdateCategoryScreen.Load();
+                break;
+            case 4:
+                DeleteCategoryScreen.Load();
+                break;
+            default: Load(); break;
+        }
     }
 }

@@ -28,12 +28,8 @@ class Program
         Console.WriteLine("--------------");
         Console.WriteLine();
         Console.WriteLine("1 - Management user");
-        Console.WriteLine("2 - Management profile");
-        Console.WriteLine("3 - Management category");
-        Console.WriteLine("4 - Management tag");
-        Console.WriteLine("5 - Bind profile/user");
-        Console.WriteLine("6 - Bind post/tag");
-        Console.WriteLine("7 - Reports");
+        Console.WriteLine("2 - Management category");
+        Console.WriteLine("3 - Management tag");
         Console.WriteLine();
         var option = int.Parse(Console.ReadLine()!);
 
@@ -43,12 +39,9 @@ class Program
                 MenuUserScreen.Load();
                 break;
             case 2:
-                Load();
-                break;
-            case 3:
                 MenuCategoryScreen.Load();
                 break;
-            case 4:
+            case 3:
                 MenuTagScreen.Load();
                 break;
             default: Load(); break;

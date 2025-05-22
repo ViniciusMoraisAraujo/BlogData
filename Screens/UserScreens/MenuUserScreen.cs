@@ -15,5 +15,22 @@ public class MenuUserScreen
         Console.WriteLine("4. Delete user");
         Console.WriteLine();
         var option = int.Parse(Console.ReadLine()!);
+
+        switch (option)
+        {
+            case 1:
+                ListUserScreen.Load();
+                break;
+            case 2:
+                CreateUserScreen.Load();
+                break;
+            case 3:
+                UpdateUserScreen.Load();
+                break;
+            case 4:
+                DeleteUserScreen.Load();
+                break;
+            default: Load(); break;
+        }
     }
 }
