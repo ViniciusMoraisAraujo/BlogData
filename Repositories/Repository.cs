@@ -6,29 +6,30 @@ namespace BlogData.Repositories;
 
 public class Repository<TModel> where TModel : class // classe de um tipo generico
 {
-    private readonly SqlConnection _connection;
 
     public Repository(SqlConnection connection)
-        => _connection = connection;
+    {
+        Database.Connection = connection;
+    }
 
     public IEnumerable<TModel> Get()
-        => _connection.GetAll<TModel>();
+        => Database.Connection.GetAll<TModel>();
 
     public TModel Get(int id)
-        => _connection.Get<TModel>(id);
+        => Database.Connection.Get<TModel>(id);
 
     public void Create(TModel insertModel)
-        => _connection.Insert(insertModel);
+        => Database.Connection.Insert(insertModel);
 
     public void Update(TModel updateModel)
-        => _connection.Update(updateModel);
+        => Database.Connection.Update(updateModel);
 
     public void Delete(TModel deleteModel)
-        => _connection.Delete(deleteModel);
+        => Database.Connection.Delete(deleteModel);
 
     public void Delete(int modelId)
     {
-        var user = _connection.Get<TModel>(modelId);
-        _connection.Delete(user);
+        var user = Database.Connection.Get<TModel>(modelId);
+        Database.Connection.Delete(user);
     }
 }

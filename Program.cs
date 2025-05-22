@@ -2,6 +2,8 @@
 using Microsoft.Data.SqlClient;
 using BlogData.Models;
 using BlogData.Repositories;
+using BlogData.Screens.TagScreens;
+using BlogData.Screens.UserScreens;
 
 namespace BlogData;
 
@@ -11,47 +13,38 @@ class Program
 
     static void Main(string[] args)
     {
-        var connection = new SqlConnection(connection_String);
-        connection.Open();
-        //ReadUsers(connection);
-        //ReadRoles(connection);
-        //ReadTag(connection);
-        ReadUserWithRoles(connection);
-        connection.Close();
+        Database.Connection = new SqlConnection(connection_String);
+        Database.Connection.Open();
+        Load();
+        Console.ReadKey();
+        Database.Connection.Close();
     }
 
-    public static void ReadUsers(SqlConnection connection)
+    private static void Load()
     {
-        var repository = new Repository<User>(connection);
-        foreach (var user in repository.Get())
-            Console.WriteLine(user.Name);
-    }
+        Console.Clear();
+        Console.WriteLine("Blog");
+        Console.WriteLine("--------------");
+        Console.WriteLine();
+        Console.WriteLine("1 - Management user");
+        Console.WriteLine("2 - Management profile");
+        Console.WriteLine("3 - Management category");
+        Console.WriteLine("4 - Management tag");
+        Console.WriteLine("5 - Bind profile/user");
+        Console.WriteLine("6 - Bind post/tag");
+        Console.WriteLine("7 - Reports");
+        Console.WriteLine();
+        var option = int.Parse(Console.ReadLine()!);
 
-    public static void ReadRoles(SqlConnection connection)
-    {
-        var repository = new Repository<Role>(connection);
-        foreach (var role in repository.Get())
-            Console.WriteLine(role.Name);
-    }
-    public static void ReadTag(SqlConnection connection)
-    {
-        var repository = new Repository<Tag>(connection);
-        foreach (var role in repository.Get())
-            Console.WriteLine(role.Name);
-    }
-
-    public static void ReadUserWithRoles(SqlConnection connection)
-    {
-        var repository = new UserRepository(connection);
-        var items = repository.GetWithRoles();
-        foreach (var user in items)
+        switch (option)
         {
-            Console.WriteLine(user.Name);
-            foreach (var role in user.Roles)
-            {
-                Console.WriteLine($"- {role.Name}");
-            }
+            case 1:
+                MenuUserScreen.Load();
+                break;
+            case 4:
+                MenuTagScreen.Load();
+                break;
+            default: Load(); break;
         }
     }
-    
 }
